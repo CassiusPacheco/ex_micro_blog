@@ -23,6 +23,7 @@ defmodule ExMicroBlogWeb do
 
       import Plug.Conn
       import ExMicroBlogWeb.Gettext
+      import Phoenix.LiveView.Controller
       alias ExMicroBlogWeb.Router.Helpers, as: Routes
     end
   end
@@ -41,6 +42,7 @@ defmodule ExMicroBlogWeb do
 
       import ExMicroBlogWeb.ErrorHelpers
       import ExMicroBlogWeb.Gettext
+      import Phoenix.LiveView.Helpers
       alias ExMicroBlogWeb.Router.Helpers, as: Routes
     end
   end
@@ -50,6 +52,7 @@ defmodule ExMicroBlogWeb do
       use Phoenix.Router
       import Plug.Conn
       import Phoenix.Controller
+      import Phoenix.LiveView.Router
     end
   end
 

@@ -15,7 +15,8 @@ config :ex_micro_blog, ExMicroBlogWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "R+L3GgE1k9TvAEeL0cDVfCYMyULnpzyvNIH7hQM/oeTJDMfJrDiHZwRnuxSMBGF3",
   render_errors: [view: ExMicroBlogWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: ExMicroBlog.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: ExMicroBlog.PubSub, adapter: Phoenix.PubSub.PG2],
+  live_view: [signing_salt: "9L8ho2tpPSYUo71zj6T8EueeOJb9ALua"]
 
 # Configures Elixir's Logger
 config :logger, :console,

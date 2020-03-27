@@ -1,0 +1,43 @@
+version: '3.1'
+
+services:
+  database:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      backend:
+        aliases:
+          - exmicroblog-psql
+
+  web:
+    image: ex-micro-blog-app
+    restart: always
+    ports:
+      - ${APP_PORT}:${APP_PORT}
+    environment:
+      APP_PORT: ${APP_PORT}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_HOST: ${DB_HOST}
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      DATABASE_URL: ${DATABASE_URL}
+    depends_on:
+      - database
+    networks:
+      - backend
+    volumes:
+      - .:/var/www/
+
+volumes:
+  db-data:
+
+networks:
+  backend:

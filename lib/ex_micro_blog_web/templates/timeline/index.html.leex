@@ -1,0 +1,10 @@
+<%= if is_nil(@current_user) do %>
+  You're not logged in
+<% else %>
+  <%= live_component(@socket, ExMicroBlogWeb.PostBoxComponent, current_user: @current_user, id: :postbox) %>
+  <br>
+  <%= for post <- @posts do %>
+    <%= live_component(@socket, ExMicroBlogWeb.PostComponent, current_user: @current_user, post: post, id: post_id(post)) %>
+  <% end %>
+<% end %>
+<br>

@@ -1,0 +1,17 @@
+<div class="area">
+  <%= f = form_for @changeset, "#", [phx_target: "#{@myself}", phx_change: :form_change, phx_submit: :save] %>
+    <%= label f, :text %>
+    <%= text_input f, :text, placeholder: "Post something here...", autocomplete: "off" %>
+    <%= error_tag f, :text %>
+
+    <button type="submit" phx-disable-with="Posting...">Post</button>
+    <span class="h-default-space"></span>
+    <%= if is_over_limit?(@changeset) do %>
+      <span class="postbox-char-count-invalid">
+    <% else %>
+      <span class="postbox-char-count">
+    <% end %>
+        <%= char_count(@changeset) %>
+    </span>
+  </form>
+</div>

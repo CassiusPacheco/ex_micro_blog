@@ -1,0 +1,30 @@
+# setup:
+#   addons:
+#     - plan: heroku-postgresql
+#       as: DATABASE
+# build:
+#   docker:
+#     web: Dockerfile
+#   config:
+#     MIX_ENV: prod
+#     SECRET_KEY_BASE: $SECRET_KEY_BASE
+#     DATABASE_URL: $DATABASE_URL
+# release:
+#   image: web
+#   command: 
+#     - "POOL_SIZE=2 mix ecto.migrate"
+# run: 
+#   web: "mix phx.server"
+setup:
+  addons:
+    - plan: heroku-postgresql
+      as: DATABASE
+build:
+  docker:
+    web: Dockerfile
+  config:
+    MIX_ENV: prod
+    SECRET_KEY_BASE: $SECRET_KEY_BASE
+    DATABASE_URL: $DATABASE_URL
+run:
+  web: bin/ex_micro_blog eval "ExMicroBlog.Release.migrate" && bin/ex_micro_blog start

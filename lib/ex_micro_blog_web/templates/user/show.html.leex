@@ -1,0 +1,26 @@
+<section class="phx-hero">
+  <h1><%= @user.name %></h1>
+  <%= handler(@user) %>
+  <br><br>
+  <span class="menu-username">
+    <%= link "Following #{following_count(@user)}",
+      to: Routes.user_path(@socket, :following, @user.id) %>
+  </span>
+  <span class="h-default-space"></span>
+  <span class="menu-username">
+    <%= link "Followers #{followers_count(@user)}",
+      to: Routes.user_path(@socket, :follower, @user.id) %>
+  </span>
+</section>
+
+<%= for post <- @posts do %>
+  <%= live_component(
+    @socket,
+    ExMicroBlogWeb.PostComponent,
+    current_user: @current_user,
+    user: @user,
+    post: post,
+    id: "post-#{post.id}") %>
+<% end %>
+
+<br>

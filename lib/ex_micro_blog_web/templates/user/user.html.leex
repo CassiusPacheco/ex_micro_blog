@@ -1,0 +1,17 @@
+<div class="user-card">
+  <span class="user-title"><%= @user.name %></span>
+  <p class="user-subtitle">
+    <span class="user-handler">
+      <%= live_redirect handler(@user),
+        to: Routes.user_path(ExMicroBlogWeb.Endpoint, :username, @user.username) %>
+    </span>
+  </p>
+
+  <%= if is_logged_in(@current_user) do %>
+    <%= if is_following?(@current_user, @user) do %>
+      <button class="button", phx-click="unfollow", phx-target="<%= @myself %>"> Following</i>
+    <% else %>
+      <button class="button", phx-click="follow", phx-target="<%= @myself %>"> Follow</i>
+    <% end %>
+  <% end %>
+</div>

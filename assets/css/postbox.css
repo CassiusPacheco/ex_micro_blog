@@ -1,0 +1,13 @@
+.postbox {
+  color: teal;
+}
+
+.postbox-char-count-invalid {
+  font-weight: 600;
+  color: firebrick;
+}
+
+.postbox-char-count {
+  font-weight: 400;
+  color:teal;
+}

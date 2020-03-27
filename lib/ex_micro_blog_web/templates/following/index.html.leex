@@ -1,0 +1,12 @@
+<section class="phx-hero">
+  <h2><%= @user.name %> following</h2>
+</section>
+
+<%= for user <- @following do %>
+  <%= live_component(
+    @socket,
+    ExMicroBlogWeb.UserComponent,
+    current_user: @current_user,
+    user: user,
+    id: "user-#{user.id}") %>
+<% end %>

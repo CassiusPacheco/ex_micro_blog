@@ -1,0 +1,38 @@
+<div class="post-card">
+  <span class="post-title"><%= @post.user.name %></span>
+  <p class="post-subtitle">
+    <span class="post-handler">
+      <%= live_redirect handler(@post.user),
+        to: Routes.user_path(ExMicroBlogWeb.Endpoint, :username, @post.user.username) %>
+    </span>
+    <%= human_readable_date(@post.inserted_at) %>
+  </p>
+
+  <div class="post-text">
+    <%= @post.text %>
+  </div>
+
+  </p>
+
+  <%= if is_logged_in(@current_user) do %>
+    <%= if is_repost?(@post, @current_user) do %>
+      <a href="#" phx-click="undo-repost" phx-target="<%= @myself %>"><i class="fa fa-retweet active"> Reposted</i></a>
+    <% else %>
+      <a href="#" phx-click="repost" phx-target="<%= @myself %>"><i class="fa fa-retweet"> Repost</i></a>
+    <% end %>
+
+    <span class="h-default-space"></span>
+
+    <%= if is_favorite?(@post, @current_user) do %>
+      <a href="#" phx-click="undo-favorite" phx-target="<%= @myself %>"><i class="fa fa-heart active"> Favorited</i></a>
+    <% else %>
+      <a href="#" phx-click="favorite" phx-target="<%= @myself %>"><i class="fa fa-heart"> Favorite</i></a>
+    <% end %>
+
+    <span class="h-default-space"></span>
+
+    <%= if is_deletable?(@post, @current_user) do %>
+      <a href="#" phx-click="delete" phx-target="<%= @myself %>"><i class="fa fa-trash"> Delete</i></a>
+    <% end %>
+  <% end %>
+</div>

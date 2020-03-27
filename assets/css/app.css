@@ -1,0 +1,21 @@
+/* This file is for your main application css. */
+
+@import "./phoenix.css";
+@import "./post.css";
+@import "./post.css";
+@import "./postbox.css";
+@import "./user.css";
+@import "../node_modules/nprogress/nprogress.css";
+
+.header {
+  padding-top: 8px;
+}
+
+.h-default-space {
+  padding: 8px;
+}
+
+.active {
+  word-spacing: 8px;
+  color:rgb(47, 182, 255);
+}

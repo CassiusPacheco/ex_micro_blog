@@ -1,0 +1,22 @@
+<%= if is_nil(@current_user) do %>
+  <center><a href="https://github.com/CassiusPacheco/ex_micro_blog">Check out the source code on Github</a></center>
+  <br/>
+  You're not logged in, consider logging in to access your timeline.
+  <br/>
+  <br/>
+  You may be interested in following these users:
+<% end %>
+
+<br/>
+<br/>
+
+<%= for user <- @users do %>
+  <%= live_component(
+    @socket,
+    ExMicroBlogWeb.UserComponent,
+    current_user: @current_user,
+    user: user,
+    id: "user-#{user.id}") %>
+<% end %>
+
+<br/>

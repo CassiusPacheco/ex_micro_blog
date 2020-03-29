@@ -1,0 +1,12 @@
+<section class="phx-hero">
+  <h1><%= @user.name %></h1>
+  @<%= @user.handler %>
+</section>
+
+<table>
+  <%= for post <- @posts do %>
+    <tr>
+        <td><%= post.text %></td>
+    </tr>
+  <% end %>
+</table>

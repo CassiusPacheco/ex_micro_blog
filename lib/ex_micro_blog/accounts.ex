@@ -38,6 +38,22 @@ defmodule ExMicroBlog.Accounts do
   def get_user!(id), do: Repo.get!(User, id)
 
   @doc """
+  Gets a single user by handler.
+
+  Returns nil if no result was found. Raises if more than one entry.
+
+  ## Examples
+
+      iex> get_user_by_handler(john)
+      %User{}
+
+      iex> get_user_by_handler(someoneelse)
+      ** nil
+
+  """
+  def get_user_by_handler(handler), do: Repo.get_by(User, handler: handler)
+
+  @doc """
   Creates a user.
 
   ## Examples

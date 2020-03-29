@@ -38,6 +38,22 @@ defmodule ExMicroBlog.Timeline do
   def get_post!(id), do: Repo.get!(Post, id)
 
   @doc """
+  Gets all posts and reposts made by the user by their id.
+
+  ## Examples
+
+      iex> get_user_posts_by_user_id(1)
+      [%Post{}, ...]
+
+  """
+  def get_user_posts_by_user_id(id) do
+    from(p in Post,
+      where: p.user_id == ^id
+    )
+    |> Repo.all()
+  end
+
+  @doc """
   Creates a post.
 
   ## Examples

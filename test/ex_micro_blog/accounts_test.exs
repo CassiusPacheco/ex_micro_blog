@@ -41,6 +41,16 @@ defmodule ExMicroBlog.AccountsTest do
       assert Accounts.get_user!(user.id) == user
     end
 
+    test "get_user_by_handler!/1 returns nil when can't find user by given handler" do
+      user = user_fixture()
+      assert is_nil(Accounts.get_user_by_handler("cassius"))
+    end
+
+    test "get_user_by_handler!/1 returns the user with given handler" do
+      user = user_fixture()
+      assert Accounts.get_user_by_handler("some handler") == user
+    end
+
     test "create_user/1 with valid data creates a user" do
       assert {:ok, %User{} = user} = Accounts.create_user(@valid_attrs)
       assert user.email == "some email"

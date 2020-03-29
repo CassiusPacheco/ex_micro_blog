@@ -32,6 +32,36 @@ defmodule ExMicroBlog.TimelineTest do
       assert fetched.user_id == post.user_id
     end
 
+    test "get_user_posts_by_user_id!/1 returns the post and reposts by given user id" do
+      user = insert(:user)
+      post = insert(:post, user: user)
+      post1 = insert(:post1, user: user)
+
+      posts = Timeline.get_user_posts_by_user_id(user.id)
+
+      fetched0 =
+        posts
+        |> Enum.at(0)
+
+      fetched1 =
+        posts
+        |> Enum.at(1)
+
+      assert fetched0.id == post.id
+      assert fetched0.text == post.text
+      assert fetched0.user_id == post.user_id
+
+      assert fetched1.id == post1.id
+      assert fetched1.text == post1.text
+      assert fetched1.user_id == post1.user_id
+    end
+
+    test "get_user_posts_by_user_id!/1 returns empty list for unexisting user id" do
+      posts = Timeline.get_user_posts_by_user_id(123)
+
+      assert posts == []
+    end
+
     test "create_post/1 with valid data creates a post" do
       user = insert(:user)
       post = %{"text" => "some text", "user_id" => user.id}

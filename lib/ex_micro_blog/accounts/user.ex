@@ -25,9 +25,19 @@ defmodule ExMicroBlog.Accounts.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:handler, :password_hash, :name, :email])
-    |> validate_required([:handler, :password_hash, :name, :email])
+    |> cast(attrs, [:handler, :password, :name, :email])
+    |> validate_required([:handler, :password, :name, :email])
+    |> validate_length(:password, min: 6, max: 100)
     |> unique_constraint(:handler)
     |> unique_constraint(:email)
+    |> put_password_hash()
   end
+
+  defp put_password_hash(
+         %Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset
+       ) do
+    change(changeset, password: Pbkdf2.hash_pwd_salt(password))
+  end
+
+  defp put_password_hash(changeset), do: changeset
 end

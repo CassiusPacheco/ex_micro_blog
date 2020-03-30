@@ -21,6 +21,7 @@ defmodule ExMicroBlog.Accounts do
     Repo.all(User)
   end
 
+  @spec get_user!(any) :: any
   @doc """
   Gets a single user.
 
@@ -181,5 +182,35 @@ defmodule ExMicroBlog.Accounts do
   """
   def delete_follower(%Follower{} = follower) do
     Repo.delete(follower)
+  end
+
+  def authenticate_user_by_email(email, password) do
+    case Repo.get_by(Admin, email: email) do
+      %User{} = user ->
+        verify_password(user, password)
+
+      nil ->
+        Pbkdf2.no_user_verify()
+        {:error, :not_found}
+    end
+  end
+
+  def authenticate_user_by_handler(handler, password) do
+    case get_user_by_handler(handler) do
+      %User{} = user ->
+        verify_password(user, password)
+
+      nil ->
+        Pbkdf2.no_user_verify()
+        {:error, :not_found}
+    end
+  end
+
+  defp verify_password(user, password) do
+    if Pbkdf2.verify_pass(password, user.password_hash) do
+      {:ok, user}
+    else
+      {:error, :unauthorized}
+    end
   end
 end

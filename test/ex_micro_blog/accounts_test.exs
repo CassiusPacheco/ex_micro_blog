@@ -9,18 +9,18 @@ defmodule ExMicroBlog.AccountsTest do
     alias ExMicroBlog.Accounts.User
 
     @valid_attrs %{
-      email: "some email",
-      handler: "some handler",
+      username: "some username",
       name: "some name",
-      password_hash: "some password_hash"
+      password: "password",
+      password_hash: Pbkdf2.hash_pwd_salt("password")
     }
     @update_attrs %{
-      email: "some updated email",
-      handler: "some updated handler",
+      username: "some updated username",
       name: "some updated name",
-      password_hash: "some updated password_hash"
+      password: "updated password",
+      password_hash: Pbkdf2.hash_pwd_salt("updated password")
     }
-    @invalid_attrs %{email: nil, handler: nil, name: nil, password_hash: nil}
+    @invalid_attrs %{username: nil, name: nil, password: nil, password_hash: nil}
 
     def user_fixture(attrs \\ %{}) do
       {:ok, user} =
@@ -28,7 +28,7 @@ defmodule ExMicroBlog.AccountsTest do
         |> Enum.into(@valid_attrs)
         |> Accounts.create_user()
 
-      user
+      Map.replace(user, :password, nil)
     end
 
     test "list_users/0 returns all users" do
@@ -41,22 +41,21 @@ defmodule ExMicroBlog.AccountsTest do
       assert Accounts.get_user!(user.id) == user
     end
 
-    test "get_user_by_handler!/1 returns nil when can't find user by given handler" do
-      user = user_fixture()
-      assert is_nil(Accounts.get_user_by_handler("cassius"))
+    test "get_user_by_username!/1 returns nil when can't find user by given username" do
+      _ = user_fixture()
+      assert is_nil(Accounts.get_user_by_username("cassius"))
     end
 
-    test "get_user_by_handler!/1 returns the user with given handler" do
+    test "get_user_by_username!/1 returns the user with given username" do
       user = user_fixture()
-      assert Accounts.get_user_by_handler("some handler") == user
+      assert Accounts.get_user_by_username("some username") == user
     end
 
     test "create_user/1 with valid data creates a user" do
       assert {:ok, %User{} = user} = Accounts.create_user(@valid_attrs)
-      assert user.email == "some email"
-      assert user.handler == "some handler"
+      assert user.username == "some username"
       assert user.name == "some name"
-      assert user.password_hash == "some password_hash"
+      assert Pbkdf2.verify_pass("password", user.password_hash)
     end
 
     test "create_user/1 with invalid data returns error changeset" do
@@ -66,10 +65,9 @@ defmodule ExMicroBlog.AccountsTest do
     test "update_user/2 with valid data updates the user" do
       user = user_fixture()
       assert {:ok, %User{} = user} = Accounts.update_user(user, @update_attrs)
-      assert user.email == "some updated email"
-      assert user.handler == "some updated handler"
+      assert user.username == "some updated username"
       assert user.name == "some updated name"
-      assert user.password_hash == "some updated password_hash"
+      assert Pbkdf2.verify_pass("updated password", user.password_hash)
     end
 
     test "update_user/2 with invalid data returns error changeset" do

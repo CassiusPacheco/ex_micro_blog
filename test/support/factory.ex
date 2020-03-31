@@ -6,45 +6,45 @@ defmodule ExMicroBlog.Factory do
 
   def user_factory do
     %User{
-      email: "cassius@test.com",
-      handler: "@cassius",
+      username: "cassius",
       name: "Cassius Pacheco",
+      password: "password",
       password_hash: "hash"
     }
   end
 
   def user1_factory do
     %User{
-      email: "julia@test.com",
-      handler: "@julia",
-      name: "Julia Jones",
+      username: "julia",
+      name: "Julia C",
+      password: "password",
       password_hash: "hash"
     }
   end
 
   def user2_factory do
     %User{
-      email: "john@test.com",
-      handler: "@john",
+      username: "john",
       name: "John Smith",
+      password: "password",
       password_hash: "hash"
     }
   end
 
   def user3_factory do
     %User{
-      email: "maria@test.com",
-      handler: "@maia",
+      username: "maia",
       name: "Maria Silva",
+      password: "password",
       password_hash: "hash"
     }
   end
 
   def user4_factory do
     %User{
-      email: "carla@test.com",
-      handler: "@carla",
+      username: "carla",
       name: "Carla Diniz",
+      password: "password",
       password_hash: "hash"
     }
   end

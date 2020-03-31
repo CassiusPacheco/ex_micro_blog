@@ -6,7 +6,6 @@ defmodule ExMicroBlog.TimelineTest do
   alias ExMicroBlog.Timeline
 
   describe "posts" do
-    alias ExMicroBlog.Accounts.User
     alias ExMicroBlog.Timeline.Post
 
     test "list_posts/0 returns all posts" do
@@ -99,7 +98,6 @@ defmodule ExMicroBlog.TimelineTest do
   describe "favorites" do
     alias ExMicroBlog.Timeline
     alias ExMicroBlog.Timeline.Favorite
-    alias ExMicroBlog.Accounts.User
 
     def favorite_fixture do
       user = insert(:user)
@@ -213,7 +211,6 @@ defmodule ExMicroBlog.TimelineTest do
     alias ExMicroBlog.Timeline.Hashtag
 
     @valid_attrs %{name: "some name"}
-    @update_attrs %{name: "some updated name"}
     @invalid_attrs %{name: nil}
 
     def hashtag_fixture(attrs \\ %{}) do

@@ -7,13 +7,13 @@ defmodule ExMicroBlogWeb.SessionController do
     render(conn, "new.html")
   end
 
-  def create(conn, %{"session" => %{"handler" => handler, "password" => password}}) do
-    case Accounts.authenticate_user_by_handler(handler, password) do
+  def create(conn, %{"session" => %{"username" => username, "password" => password}}) do
+    case Accounts.authenticate_user_by_username(username, password) do
       {:ok, user} ->
         conn
         |> ExMicroBlogWeb.Auth.login(user)
         |> put_flash(:info, "Welcome back #{user.name}!")
-        |> redirect(to: Routes.user_path(conn, :index, handler: handler))
+        |> redirect(to: Routes.user_path(conn, :index, username: username))
 
       {:error, _reason} ->
         conn

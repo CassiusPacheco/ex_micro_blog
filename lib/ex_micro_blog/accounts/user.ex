@@ -8,8 +8,7 @@ defmodule ExMicroBlog.Accounts.User do
   alias ExMicroBlog.Timeline.Post
 
   schema "users" do
-    field :email, :string
-    field :handler, :string
+    field :username, :string
     field :name, :string
     field :password, :string, virtual: true
     field :password_hash, :string
@@ -25,18 +24,17 @@ defmodule ExMicroBlog.Accounts.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:handler, :password, :name, :email])
-    |> validate_required([:handler, :password, :name, :email])
+    |> cast(attrs, [:username, :password, :name])
+    |> validate_required([:username, :password, :name])
     |> validate_length(:password, min: 6, max: 100)
-    |> unique_constraint(:handler)
-    |> unique_constraint(:email)
+    |> unique_constraint(:username)
     |> put_password_hash()
   end
 
   defp put_password_hash(
          %Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset
        ) do
-    change(changeset, password: Pbkdf2.hash_pwd_salt(password))
+    change(changeset, password_hash: Pbkdf2.hash_pwd_salt(password))
   end
 
   defp put_password_hash(changeset), do: changeset

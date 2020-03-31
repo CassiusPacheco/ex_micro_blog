@@ -8,8 +8,8 @@ defmodule ExMicroBlogWeb.UserController do
 
   plug :authenticate when action in [:show]
 
-  def index(conn, %{"handler" => handler}) do
-    case Accounts.get_user_by_handler(handler) do
+  def index(conn, %{"username" => username}) do
+    case Accounts.get_user_by_username(username) do
       %Accounts.User{} = user ->
         live_render(conn, ExMicroBlogWeb.UserLive, session: %{"user_id" => user.id})
 

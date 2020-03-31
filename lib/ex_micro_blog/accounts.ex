@@ -39,20 +39,20 @@ defmodule ExMicroBlog.Accounts do
   def get_user!(id), do: Repo.get!(User, id)
 
   @doc """
-  Gets a single user by handler.
+  Gets a single user by username.
 
   Returns nil if no result was found. Raises if more than one entry.
 
   ## Examples
 
-      iex> get_user_by_handler(john)
+      iex> get_user_by_username(john)
       %User{}
 
-      iex> get_user_by_handler(someoneelse)
+      iex> get_user_by_username(someoneelse)
       ** nil
 
   """
-  def get_user_by_handler(handler), do: Repo.get_by(User, handler: handler)
+  def get_user_by_username(username), do: Repo.get_by(User, username: username)
 
   @doc """
   Creates a user.
@@ -184,19 +184,8 @@ defmodule ExMicroBlog.Accounts do
     Repo.delete(follower)
   end
 
-  def authenticate_user_by_email(email, password) do
-    case Repo.get_by(Admin, email: email) do
-      %User{} = user ->
-        verify_password(user, password)
-
-      nil ->
-        Pbkdf2.no_user_verify()
-        {:error, :not_found}
-    end
-  end
-
-  def authenticate_user_by_handler(handler, password) do
-    case get_user_by_handler(handler) do
+  def authenticate_user_by_username(username, password) do
+    case get_user_by_username(username) do
       %User{} = user ->
         verify_password(user, password)
 

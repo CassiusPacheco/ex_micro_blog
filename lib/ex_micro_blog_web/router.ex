@@ -20,9 +20,9 @@ defmodule ExMicroBlogWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
-    get "/u/:username", UserController, :index
     resources "/users", UserController, only: [:index, :show, :new, :create]
     resources "/sessions", SessionController, only: [:new, :create, :delete]
+    get "/:username", UserController, :index
   end
 
   # Other scopes may use custom stacks.

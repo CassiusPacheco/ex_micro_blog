@@ -5,8 +5,8 @@ defmodule ExMicroBlog.Accounts do
 
   import Ecto.Query, warn: false
   alias ExMicroBlog.Repo
-
   alias ExMicroBlog.Accounts.User
+  alias Ecto.Changeset
 
   @doc """
   Returns the list of users.
@@ -111,13 +111,26 @@ defmodule ExMicroBlog.Accounts do
 
   ## Examples
 
-      iex> change_user(user)
+      iex> change_user(user, attrs \\ %{})
       %Ecto.Changeset{source: %User{}}
 
   """
-  def change_user(%User{} = user) do
-    User.changeset(user, %{})
+  def change_user(%User{} = user, attrs \\ %{}) do
+    User.changeset(user, attrs)
   end
+
+  def validate_username(%Ecto.Changeset{changes: %{username: username}} = changeset) do
+    case get_user_by_username(username) do
+      nil ->
+        changeset
+
+      _ ->
+        changeset
+        |> Changeset.add_error(:username, "username has already been taken", validation: :required)
+    end
+  end
+
+  def validate_username(changeset), do: changeset
 
   alias ExMicroBlog.Accounts.Follower
 

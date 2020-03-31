@@ -4,16 +4,23 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>ExMicroBlog · Phoenix Framework</title>
+    <title>Microblog</title>
     <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
   </head>
   <body>
     <header>
       <section class="container">
         <nav role="navigation">
-          <ul>
-            <li><a href="https://hexdocs.pm/phoenix/overview.html">Login</a></li>
-          </ul>
+            <%= if @current_user do %>
+              <%= @current_user.username %>
+              <%= link "My Videos", to: Routes.page_path(@conn, :index) %>
+              <%= link "Log out",
+                    to: Routes.session_path(@conn, :delete, @current_user),
+                    method: "delete" %>
+            <% else %>
+              <%= link "Register", to: Routes.user_path(@conn, :new) %>
+              <%= link "Log in", to: Routes.session_path(@conn, :new) %>
+          <% end %>
         </nav>
         <h1>Microblog</h1>
       </section>

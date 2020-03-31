@@ -11,7 +11,7 @@ defmodule ExMicroBlogWeb.UserController do
   def index(conn, %{"username" => username}) do
     case Accounts.get_user_by_username(username) do
       %Accounts.User{} = user ->
-        live_render(conn, ExMicroBlogWeb.UserLive, session: %{"user_id" => user.id})
+        live_render(conn, ExMicroBlogWeb.UserLive.Index, session: %{"user_id" => user.id})
 
       _ ->
         conn

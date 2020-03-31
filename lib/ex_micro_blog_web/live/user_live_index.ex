@@ -1,4 +1,4 @@
-defmodule ExMicroBlogWeb.UserLive do
+defmodule ExMicroBlogWeb.UserLive.Index do
   use Phoenix.LiveView
 
   def render(assigns) do

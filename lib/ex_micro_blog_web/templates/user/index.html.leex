@@ -3,10 +3,6 @@
   @<%= @user.username %>
 </section>
 
-<table>
-  <%= for post <- @posts do %>
-    <tr>
-        <td><%= post.text %></td>
-    </tr>
-  <% end %>
-</table>
+<%= for post <- @posts do %>
+  <%= live_component(@socket, ExMicroBlogWeb.PostComponent, user: @user, post: post) %>
+<% end %>

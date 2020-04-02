@@ -1,0 +1,23 @@
+<div class="post">
+  <div class="post__inner">
+    <div class="post__avatar">
+    </div>
+
+    <h3 class="post__title"><%= @user.name %></h3>
+
+    <span class="post__meta">
+      <span class="post-date" title="<%= @post.inserted_at %>">@<%= @user.username %> <%= human_readable_date(@post.inserted_at) %></span>
+    </span>
+
+    <div class="post__body">
+      <%= @post.text %>
+    </div>
+
+    </p>
+    <span class="post__functions">
+      <i class="icon-retweet"></i> Retweet
+      <i class="icon-retweet"></i> Favorite
+    </span>
+    </p>
+  </div>
+</div>

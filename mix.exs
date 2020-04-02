@@ -46,7 +46,8 @@ defmodule ExMicroBlog.MixProject do
       {:phoenix_live_view, "~> 0.10.0"},
       {:floki, ">= 0.0.0", only: :test},
       {:ex_machina, "~> 2.4", only: :test},
-      {:pbkdf2_elixir, "~> 1.0"}
+      {:pbkdf2_elixir, "~> 1.0"},
+      {:calendar, "~> 1.0.0"}
     ]
   end
 

@@ -1,0 +1,7 @@
+/* This file is for your main application css. */
+
+@import "~bootstrap/scss/bootstrap.scss";
+
+.alert:empty {
+  display: none;
+}

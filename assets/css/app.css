@@ -1,4 +1,15 @@
 /* This file is for your main application css. */
 
 @import "./phoenix.css";
-@import "../../deps/phoenix_live_view/assets/css/live_view.css";
+/* @import "../../deps/phoenix_live_view/assets/css/live_view.css"; */
+
+/* This won't work since we want postcss-import so we can use @apply inside included files
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+*/
+
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+

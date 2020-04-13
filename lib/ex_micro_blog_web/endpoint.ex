@@ -8,6 +8,7 @@ defmodule ExMicroBlogWeb.Endpoint do
   ]
 
   socket "/socket", ExMicroBlogWeb.UserSocket,
+    websocket: [timeout: 45_000],
     websocket: true,
     longpoll: false
 
